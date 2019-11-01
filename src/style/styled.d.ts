@@ -5,6 +5,10 @@ declare module 'styled-components' {
         backgroundColors: {
             body: string,
             card: string
+        },
+        font: {
+            size: string,
+            color: string
         }
     }
 }
