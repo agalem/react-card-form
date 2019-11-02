@@ -16,24 +16,28 @@ const Label = styled.label<LabelProps>`
     border: ${props => props.showBorder ? '1px solid white' : 'none'};
     border-radius: 4px;
     color: ${props => props.theme.font.color};
-    font-size: ${props => props.theme.font.size};
+    font-size: ${props => props.theme.font.sizeLg};
+    font-weight: ${props => props.theme.font.weight}
+    text-shadow: 7px 6px 10px rgba(14, 42, 90, 0.8);
+    margin-left: -15px;
+    white-space: nowrap;
 `;
 
 const Number = styled.span<NumberProps>`
     display: inline-block;
-    margin-right: ${props => props.addSpace ? '15px' : '1px'}
+    margin-right: ${props => props.addSpace ? '31px' : '1px'}
 `;
 
-const cardNumber  = "################".split('');
+const cardNumber  = "################";
 
-const getElementData = (e: Object) => {
-    console.log(e);
+type CardNumberProps = {
+    showBorder: boolean
 }
 
-const CardNumberDisplay: React.FC = () => {
+const CardNumber = (props: CardNumberProps) => {
     return(
-        <Label showBorder onClick={e => getElementData(e)}>
-            {cardNumber.map((elem, index) => {
+        <Label showBorder={props.showBorder}>
+            {cardNumber.split('').map((elem, index) => {
                 return (
                     <Number key={index} addSpace={((index + 1) % 4 === 0 && index !== 15)}>
                         #
@@ -44,4 +48,4 @@ const CardNumberDisplay: React.FC = () => {
     )
 };
 
-export default CardNumberDisplay
+export default CardNumber;

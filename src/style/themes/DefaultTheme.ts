@@ -6,8 +6,12 @@ const mainTheme: DefaultTheme = {
         card: '#000'
     },
     font: {
-        size: '1.9rem',
-        color: '#fff'
+        sizeLg: '25px',
+        sizeSm: '18px',
+        color: '#fff',
+        weight: 500,
+        titleSize: '0.85rem',
+        titleColor: "#D5D9DB"
     }
 }
 

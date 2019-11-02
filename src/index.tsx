@@ -5,6 +5,7 @@ import * as serviceWorker from './serviceWorker';
 import {ThemeProvider} from "styled-components";
 import {GlobalStyle} from "./style/global/GlobalStyle";
 import {mainTheme} from "./style/themes/DefaultTheme";
+import "./index.css";
 
 ReactDOM.render(
     <Fragment>

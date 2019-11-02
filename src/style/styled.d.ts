@@ -7,8 +7,12 @@ declare module 'styled-components' {
             card: string
         },
         font: {
-            size: string,
-            color: string
+            sizeLg: string,
+            sizeSm: string,
+            color: string,
+            weight: number,
+            titleSize: string,
+            titleColor: string
         }
     }
 }
