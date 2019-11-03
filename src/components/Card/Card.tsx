@@ -3,6 +3,7 @@ import styled from "styled-components";
 import CardNumber from "../CardNumber/CardNumber";
 import CardHolder from "../CardHolder/CardHolder";
 import CardExpiration from "../CardExpiration/CardExpiration";
+import CardCVV from "../CardCVV/CardCVV";
 import backgroundImg from "../../assets/images/background.jpeg";
 import chipImg from "../../assets/images/chip.png";
 import logoImg from "../../assets/images/amex.png";
@@ -12,14 +13,15 @@ const Content = styled.div`
   width: 100%;
   height: 100%;
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
-
   transition: transform 1s;
   transform-style: preserve-3d;
 `;
 
 const CardContainer = styled.div`
-  position: relative;
-  top: -40px;
+  position: absolute;
+  top: -100px;
+  left: 0px;
+  right: 0px;
   margin: 0 auto;
   max-width: 430px;
   height: 270px;
@@ -31,11 +33,14 @@ const CardContainer = styled.div`
   }
 `;
 
-const Back = styled.div`
+const Front = styled.div`
    position: absolute;
    height: 100%;
    width: 100%;
-   background-image: url(${backgroundImg});
+   background: linear-gradient(
+          rgba(0, 0, 0, 0.25), 
+          rgba(0, 0, 0, 0.25)
+        ), url(${backgroundImg});
    line-height: 300px; 
    color: #03446A;
    text-align: center;
@@ -61,20 +66,23 @@ const CardRow = styled.div<CardRowProps>`
     padding: 0px ${props => props.edgeTouching ? '0px' : '22px'};
 `;
 
-const Front = styled.div`
+const Back = styled.div`
    position: absolute;
    height: 100%;
    width: 100%;
-   line-height: 300px;
+   background: linear-gradient(
+          rgba(0, 0, 0, 0.25), 
+          rgba(0, 0, 0, 0.25)
+        ), url(${backgroundImg});
+   line-height: 300px; 
+   color: #03446A;
    text-align: center;
    font-size: 10px;
    border-radius: 5px;
    backface-visibility: hidden;
-   background-image: url(${backgroundImg});
-   color: white;
-   transform: rotateY( -180deg );
    display: grid;
    grid-template-rows: 90px 90px 90px;
+   transform: rotateY( -180deg );
 `;
 
 const CardChip = styled.img`
@@ -82,9 +90,14 @@ const CardChip = styled.img`
     height: auto;
 `;
 
-const CardCompany = styled.img`
+interface CardCompanyProps {
+    opacity?: boolean
+}
+
+const CardCompany = styled.img<CardCompanyProps>`
     height: 45px;
     width: auto;
+    opacity: ${props => props.opacity ? '0.7' : '1'};
 `;
 
 const CardBand = styled.div`
@@ -94,6 +107,18 @@ const CardBand = styled.div`
     margin: 0;
     margin-top: 20px;
 `;
+
+const CardCompanyBackContainer = styled.div`
+    height: 45px;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    max-width: 100px;
+    margin-left: auto;
+    margin-right: 18px;
+    width: 100%;
+`;
+
 
 const Card: React.FC  = () => {
     return (
@@ -117,8 +142,14 @@ const Card: React.FC  = () => {
                     <CardRow edgeTouching>
                         <CardBand/>
                     </CardRow>
-                    <CardRow></CardRow>
-                    <CardRow></CardRow>
+                    <CardRow>
+                        <CardCVV/>
+                    </CardRow>
+                    <CardRow edgeTouching>
+                        <CardCompanyBackContainer>
+                            <CardCompany opacity src={logoImg} alt={"Card logo"}/>
+                        </CardCompanyBackContainer>
+                    </CardRow>
                 </Back>
             </Content>
         </CardContainer>
