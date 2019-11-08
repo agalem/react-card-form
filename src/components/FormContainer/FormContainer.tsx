@@ -5,6 +5,7 @@ import Card from "../Card/Card";
 import Form from "../Form/Form";
 
 const CentralBox = styled.div`
+    max-width: 800px;
     position: relative;
     top: 150px;
     background: #fff;
@@ -12,6 +13,7 @@ const CentralBox = styled.div`
     border-radius: 10px;
     padding: 35px;
     padding-top: 180px;
+    margin: 0 auto;
 `;
 
 const FormContainer: React.FC = () => {

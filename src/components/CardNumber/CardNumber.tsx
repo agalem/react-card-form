@@ -1,12 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { useStateValue } from "../../contexts/StateContext";
 
-interface NumberProps {
-    readonly addSpace: boolean
-}
+import SlidingTextElement from "../SlidingTextElement/SlidingTextElement";
 
 interface LabelProps {
-    readonly showBorder?: boolean
+    showBorder?: boolean
 }
 
 const Label = styled.label<LabelProps>`
@@ -23,25 +22,21 @@ const Label = styled.label<LabelProps>`
     white-space: nowrap;
 `;
 
-const Number = styled.span<NumberProps>`
-    display: inline-block;
-    margin-right: ${props => props.addSpace ? '31px' : '1px'}
-`;
-
-const cardNumber  = "################";
-
 type CardNumberProps = {
-    showBorder: boolean
+    readonly showBorder: boolean
 }
 
 const CardNumber = (props: CardNumberProps) => {
+
+    const defaultNumber  = new Array(16).fill("");
+    const [ {cardNumber}]: any = useStateValue();
+    const numberToShow = cardNumber.split("").concat(defaultNumber.slice(cardNumber.length));
+
     return(
         <Label showBorder={props.showBorder}>
-            {cardNumber.split('').map((elem, index) => {
+            {numberToShow.map((elem: string, index: number) => {
                 return (
-                    <Number key={index} addSpace={((index + 1) % 4 === 0 && index !== 15)}>
-                        #
-                    </Number>
+                    <SlidingTextElement key={index} topElementContent={"#"} bottomElementContent={index < 4 || index > 11 ? elem : "*"} containerWidth={"16px"} containerHeight={"26px"} addElementSpace={((index + 1) % 4 === 0 && index !== 15)} isElementUserInput={elem !== ""}/>
                 )
             })}
         </Label>

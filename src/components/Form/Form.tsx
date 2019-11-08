@@ -5,13 +5,13 @@ import FormInput from "../FormInput/FormInput";
 
 const Container = styled.div`
     margin-top: 30px;
-    width: 700px;
+    width: 100%;
 `;
 
 const Form: React.FC = () => {
     return (
         <Container>
-            <FormInput/>
+            <FormInput type={'CardNumber'}/>
         </Container>
     )
 };

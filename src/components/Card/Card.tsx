@@ -4,17 +4,24 @@ import CardNumber from "../CardNumber/CardNumber";
 import CardHolder from "../CardHolder/CardHolder";
 import CardExpiration from "../CardExpiration/CardExpiration";
 import CardCVV from "../CardCVV/CardCVV";
+import SlidingLogoElement from "../SlidingLogoElement/SlidingLogoElement";
+
 import backgroundImg from "../../assets/images/background.jpeg";
 import chipImg from "../../assets/images/chip.png";
 import logoImg from "../../assets/images/amex.png";
 
-const Content = styled.div`
+interface ContentProps {
+    isBackVisible: boolean
+}
+
+const Content = styled.div<ContentProps>`
   position: absolute;
   width: 100%;
   height: 100%;
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
-  transition: transform 1s;
+  transition: ${props => props.isBackVisible ? 'transform 1s' : 'transform 0.5s' };
   transform-style: preserve-3d;
+  transform: ${props => props.isBackVisible ? 'rotateY( -180deg )' : ''};
 `;
 
 const CardContainer = styled.div`
@@ -27,10 +34,6 @@ const CardContainer = styled.div`
   height: 270px;
   width: 100%;
   perspective: 500px;
-  &:active ${Content} {
-      transform: rotateY( -180deg ) ;
-      transition: transform 0.5s;
-  }
 `;
 
 const Front = styled.div`
@@ -91,13 +94,13 @@ const CardChip = styled.img`
 `;
 
 interface CardCompanyProps {
-    opacity?: boolean
+    opacity?: string
 }
 
 const CardCompany = styled.img<CardCompanyProps>`
     height: 45px;
     width: auto;
-    opacity: ${props => props.opacity ? '0.7' : '1'};
+    opacity: ${props => props.opacity ? props.opacity : '1'};
 `;
 
 const CardBand = styled.div`
@@ -120,14 +123,16 @@ const CardCompanyBackContainer = styled.div`
 `;
 
 
+
+
 const Card: React.FC  = () => {
     return (
         <CardContainer >
-            <Content>
+            <Content isBackVisible={false}>
                 <Front>
                     <CardRow space>
                         <CardChip src={chipImg} alt={"Card chip"} />
-                        <CardCompany src={logoImg} alt={"Card logo"}/>
+                        <SlidingLogoElement/>
                     </CardRow>
                     <CardRow>
                         <CardNumber showBorder={false}/>
@@ -147,7 +152,7 @@ const Card: React.FC  = () => {
                     </CardRow>
                     <CardRow edgeTouching>
                         <CardCompanyBackContainer>
-                            <CardCompany opacity src={logoImg} alt={"Card logo"}/>
+                            <CardCompany opacity={'0.7'} src={logoImg} alt={"Card logo"}/>
                         </CardCompanyBackContainer>
                     </CardRow>
                 </Back>
