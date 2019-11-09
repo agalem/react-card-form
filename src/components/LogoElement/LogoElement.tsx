@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import {useStateValue} from "../../contexts/StateContext";
+import { useStateValue } from "../../contexts/StateContext";
 
 import amex from "../../assets/images/amex.png";
 import dinersclub from "../../assets/images/dinersclub.png";
@@ -22,10 +22,10 @@ const Logo = styled.img`
     width: auto;
 `;
 
-const SlidingLogoElement: React.FC = () => {
-    const [{cardNumber}]: any = useStateValue();
-    const [previousCompanyName, setPreviousCompanyName] = useState("American Express");
-    const [companyName, setCompanyName] = useState("American Express");
+const LogoElement: React.FC = () => {
+    const [{cardNumber}, dispatch]: any = useStateValue();
+    const [cardCompanyLogo, setCardCompanyLogo] = useState(amex);
+    const [cardCompanyAlt, setCardCompanyAlt] = useState("American Express logo");
 
     const getCompanyLogo = (number: string) => {
         const firstDigit = number[0];
@@ -39,7 +39,14 @@ const SlidingLogoElement: React.FC = () => {
         return amex;
     };
 
-    const getCompanyName = (number: string) => {
+    const sendCardNumberLength = (len: number) => {
+        dispatch({
+            type: 'changeCardNumberLength',
+            newCardNumberLength: len
+        })
+    };
+
+    const getCompanyAlt = (number: string) => {
         const firstDigit = number[0];
         if (firstDigit === '4') {
             return "Visa logo";
@@ -52,18 +59,20 @@ const SlidingLogoElement: React.FC = () => {
     };
 
     useEffect(() => {
-        async function f() {
-            console.log("Previous: ", previousCompanyName);
-            console.log("Current: ", companyName);
+        const newCompanyLogo = getCompanyLogo(cardNumber);
+        const newCompanyAlt = getCompanyAlt(cardNumber);
+
+        if (newCompanyAlt !== cardCompanyAlt) {
+            setCardCompanyLogo(newCompanyLogo);
+            setCardCompanyAlt(newCompanyAlt);
         }
-        f();
-    }, [companyName, previousCompanyName]);
+    }, [cardNumber, cardCompanyAlt]);
 
     return (
         <Container>
-            <Logo src={getCompanyLogo(cardNumber)} alt={getCompanyName(cardNumber)} />
+            <Logo src={cardCompanyLogo} alt={cardCompanyAlt} />
         </Container>
     )
 };
 
-export default SlidingLogoElement;
+export default LogoElement;

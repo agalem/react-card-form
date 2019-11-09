@@ -11,6 +11,7 @@ const mainTheme: DefaultTheme = {
         color: '#fff',
         weight: 500,
         titleSize: '0.85rem',
+        titleSizeNoContent: '1rem',
         titleColor: "#D5D9DB"
     }
 }

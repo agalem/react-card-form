@@ -13,6 +13,7 @@ const Label = styled.label`
     width: 100%;
     display: block;
     user-select: none;
+    margin-bottom: 20px;
 `;
 
 const LabelText = styled.span`
@@ -38,24 +39,46 @@ const Input = styled.input`
 //TODO add input validation -> only numbers and space every 4 number,
 //TODO max length 16
 
-type FormInputProps = {
-    readonly type?: string,
+type FormTextInputProps = {
+    readonly type: string,
+    readonly label: string,
+    readonly maxLength: number
 }
 
-const FormInput = (props: FormInputProps) => {
+const FormTextInput = (props: FormTextInputProps) => {
     const [data, dispatch]: any = useStateValue();
+    const {type, label, maxLength} = props;
 
     const handleChange = (e: any) => {
+        if (type === 'CardNumber') {
+            handleCardNumber(e);
+        } else if (type === 'CardName') {
+            handleCardName(e);
+        }
+    };
 
+    const handleCardName = (e: any) => {
+        let newCardName = e.target.value;
+        if (/\d/.test(newCardName)) {
+            console.log("Zawiera cyfry");
+            return;
+        }
+        dispatch({
+            type: 'changeCardName',
+            newCardName
+        });
+    };
+
+    const handleCardNumber = (e:any) => {
         let newCardNumber = e.target.value.replace(/\s/g, '');
 
-        if(newCardNumber.length > 16) {
+        if (newCardNumber.length > 16) {
             console.log("Za długi input");
             e.target.value = e.target.value.slice(0, 16);
             newCardNumber = e.target.value;
         }
 
-        if(isNaN(newCardNumber)) {
+        if (isNaN(newCardNumber)) {
             console.log("Is not a number");
             return;
         }
@@ -72,11 +95,11 @@ const FormInput = (props: FormInputProps) => {
     return (
         <Container>
             <Label>
-                <LabelText>Card Number</LabelText>
-                <Input type="text" onChange={e => handleChange(e)} maxLength={19}/>
+                <LabelText>{label}</LabelText>
+                <Input type="text" onChange={e => handleChange(e)} maxLength={maxLength}/>
             </Label>
         </Container>
     )
 };
 
-export default FormInput;
+export default FormTextInput;

@@ -12,6 +12,7 @@ declare module 'styled-components' {
             color: string,
             weight: number,
             titleSize: string,
+            titleSizeNoContent: string,
             titleColor: string
         }
     }

@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { useStateValue } from "../../contexts/StateContext";
 
-import SlidingTextElement from "../SlidingTextElement/SlidingTextElement";
-
 interface LabelProps {
     showBorder?: boolean
 }
@@ -26,6 +24,40 @@ type CardNumberProps = {
     readonly showBorder: boolean
 }
 
+const TopElement = styled.span`
+    display: block;
+    position: relative;
+    top: 0;
+`;
+
+const BottomElement = styled.span`
+    display: block;
+    position: relative;
+    transform: skew(20deg, 0deg) scale(0.8);
+`;
+
+interface ContainerProps {
+    addSpace: boolean,
+    isUserInput: boolean
+}
+
+const Container = styled.div<ContainerProps>`
+    display: inline-block;
+    width: 16px;
+    height: 26px;
+    overflow: hidden;
+    margin-right: ${props => props.addSpace ? '31px' : '1px'};
+    ${TopElement} {
+        transform: ${props => props.isUserInput ? 'translateY(-120%) skew(-20deg, 0deg) scale(0.8)' : 'none'};
+        transition: transform 0.3s;
+    }
+    ${BottomElement} {
+        transform: ${props => props.isUserInput ? 'skew(0deg, 0deg) scale(1)' : 'skew(20deg, 0deg) scale(0.8)'};
+        top: ${props => props.isUserInput ? '-25px' : '0'};
+        transition: all 0.3s;
+    }
+`;
+
 const CardNumber = (props: CardNumberProps) => {
 
     const defaultNumber  = new Array(16).fill("");
@@ -36,7 +68,14 @@ const CardNumber = (props: CardNumberProps) => {
         <Label showBorder={props.showBorder}>
             {numberToShow.map((elem: string, index: number) => {
                 return (
-                    <SlidingTextElement key={index} topElementContent={"#"} bottomElementContent={index < 4 || index > 11 ? elem : "*"} containerWidth={"16px"} containerHeight={"26px"} addElementSpace={((index + 1) % 4 === 0 && index !== 15)} isElementUserInput={elem !== ""}/>
+                    <Container key={index} addSpace={((index + 1) % 4 === 0 && index !== 15)} isUserInput={elem !== ""}>
+                        <TopElement>
+                            #
+                        </TopElement>
+                        <BottomElement>
+                            {index < 4 || index > 11 ? elem : "*"}
+                        </BottomElement>
+                    </Container>
                 )
             })}
         </Label>

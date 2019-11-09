@@ -15,14 +15,23 @@ export const Container = styled.label<ContainerProps>`
     text-align: left;
     padding: 7px 8px
     cursor: pointer;
+    overflow: hidden;
 `;
 
-export const Title = styled.p`
+interface TitleProps {
+    hasContent?:boolean
+}
+
+export const Title = styled.p<TitleProps>`
     margin: 0;
-    font-size: ${props => props.theme.font.titleSize}
+    position: relative;
+    top: ${props => props.hasContent ? '0px' : '17px'};
+    font-size: ${props => props.hasContent ? props.theme.font.titleSize : props.theme.font.titleSizeNoContent}
     color: ${props => props.theme.font.titleColor}
     font-weight: ${props => props.theme.font.weight}
     text-shadow: 7px 6px 10px rgba(14, 42, 90, 0.8);
+    transition: all 0.4s;
+    backface-visibility: hidden;
 `;
 
 export const DisplayArea = styled.div`

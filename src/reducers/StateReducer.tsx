@@ -5,7 +5,31 @@ export const reducer = (state: any, action: any)  => {
                 ...state,
                 cardNumber: action.newCardNumber
             };
-
+        case 'changeCardName':
+            return {
+                ...state,
+                cardName: action.newCardName
+            };
+        case 'changeCardNumberLength':
+            return {
+                ...state,
+                cardNumberLength: action.newCardNumberLength
+            };
+        case 'changeCardMonth':
+            return {
+                ...state,
+                cardMonth: action.newCardMonth
+            };
+        case 'changeCardYear':
+            return {
+                ...state,
+                cardYear: action.newCardYear
+            };
+        case 'setBackVisible':
+            return {
+                ...state,
+                isBackVisible: action.isBackVisible
+            };
         default:
             return state;
     }

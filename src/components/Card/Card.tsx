@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import { useStateValue } from "../../contexts/StateContext";
+
 import CardNumber from "../CardNumber/CardNumber";
 import CardHolder from "../CardHolder/CardHolder";
 import CardExpiration from "../CardExpiration/CardExpiration";
 import CardCVV from "../CardCVV/CardCVV";
-import SlidingLogoElement from "../SlidingLogoElement/SlidingLogoElement";
+import LogoElement from "../LogoElement/LogoElement";
 
 import backgroundImg from "../../assets/images/background.jpeg";
 import chipImg from "../../assets/images/chip.png";
@@ -122,17 +124,16 @@ const CardCompanyBackContainer = styled.div`
     width: 100%;
 `;
 
-
-
-
 const Card: React.FC  = () => {
+    const [{isBackVisible}] : any = useStateValue();
+
     return (
         <CardContainer >
-            <Content isBackVisible={false}>
+            <Content isBackVisible={isBackVisible}>
                 <Front>
                     <CardRow space>
                         <CardChip src={chipImg} alt={"Card chip"} />
-                        <SlidingLogoElement/>
+                        <LogoElement/>
                     </CardRow>
                     <CardRow>
                         <CardNumber showBorder={false}/>
@@ -159,6 +160,6 @@ const Card: React.FC  = () => {
             </Content>
         </CardContainer>
     )
-}
+};
 
 export default Card;
