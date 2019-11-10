@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useStateValue } from "../../contexts/StateContext";
+import { CARD_TYPES } from "../../utils/cardTypes";
 
 const Container = styled.div`
     width: 100%;
@@ -36,28 +37,50 @@ const Input = styled.input`
     font-family: "Source Sans Pro", sans-serif;
 `;
 
-//TODO add input validation -> only numbers and space every 4 number,
-//TODO max length 16
-
 type FormTextInputProps = {
     readonly type: string,
     readonly label: string,
-    readonly maxLength: number
+    readonly maxLength?: number
 }
 
 const FormTextInput = (props: FormTextInputProps) => {
-    const [data, dispatch]: any = useStateValue();
-    const {type, label, maxLength} = props;
+    const [maxLength, setMaxLength] = useState(props.maxLength ? props.maxLength : 16);
+    const [{cardCompany}, dispatch]: any = useStateValue();
+    const {type, label} = props;
 
-    const handleChange = (e: any) => {
+    const handleChange = (e: any): void => {
         if (type === 'CardNumber') {
             handleCardNumber(e);
         } else if (type === 'CardName') {
             handleCardName(e);
+        } else if (type === 'CardCVV') {
+            handleCardCvv(e);
         }
     };
 
-    const handleCardName = (e: any) => {
+    const handleCardCvv = (e:any): void => {
+        console.log("Card CVV");
+    };
+
+    const showCardBack = () => {
+        if (type === 'CardCVV') {
+            dispatch({
+                type: 'setBackVisible',
+                isBackVisible: true
+            })
+        }
+    };
+
+    const hideCardBack = () => {
+        if (type === 'CardCVV') {
+            dispatch({
+                type: 'setBackVisible',
+                isBackVisible: false
+            })
+        }
+    };
+
+    const handleCardName = (e: any): void => {
         let newCardName = e.target.value;
         if (/\d/.test(newCardName)) {
             console.log("Zawiera cyfry");
@@ -69,7 +92,7 @@ const FormTextInput = (props: FormTextInputProps) => {
         });
     };
 
-    const handleCardNumber = (e:any) => {
+    const handleCardNumber = (e:any): void => {
         let newCardNumber = e.target.value.replace(/\s/g, '');
 
         if (newCardNumber.length > 16) {
@@ -83,6 +106,7 @@ const FormTextInput = (props: FormTextInputProps) => {
             return;
         }
 
+        findCardCompany(newCardNumber);
         e.target.value = e.target.value.replace(/[^\dA-Z]/g, '').replace(/(.{4})/g, '$1 ').trim();
 
         //send data to react context
@@ -92,11 +116,38 @@ const FormTextInput = (props: FormTextInputProps) => {
         });
     };
 
+    const findCardCompany = (cardNumber: string) : void => {
+        const firstDigit: number = parseInt(cardNumber[0]);
+        let newCardCompany: string = '';
+        let newMaxLength: number = 16;
+
+        if (cardNumber === '') {
+            newCardCompany = CARD_TYPES.amex.name;
+            newMaxLength = CARD_TYPES.amex.length;
+        }
+
+        if (firstDigit === 3) {
+
+        } else  if (firstDigit === 4) {
+            newCardCompany = CARD_TYPES.visa.name;
+            newMaxLength = CARD_TYPES.visa.length;
+        }
+
+        if (cardCompany !== newCardCompany) {
+            setMaxLength(newMaxLength);
+
+            dispatch({
+                type: 'changeCardCompany',
+                newCardCompany
+            });
+        }
+    };
+
     return (
         <Container>
             <Label>
                 <LabelText>{label}</LabelText>
-                <Input type="text" onChange={e => handleChange(e)} maxLength={maxLength}/>
+                <Input type="text" onChange={e => handleChange(e)} maxLength={maxLength + 3} onFocus={() => showCardBack()} onBlur={() => hideCardBack()}/>
             </Label>
         </Container>
     )

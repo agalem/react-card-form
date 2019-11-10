@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useStateValue } from "../../contexts/StateContext";
+import { CARD_TYPES } from "../../utils/cardTypes";
 
 import amex from "../../assets/images/amex.png";
 import dinersclub from "../../assets/images/dinersclub.png";
@@ -23,50 +24,42 @@ const Logo = styled.img`
 `;
 
 const LogoElement: React.FC = () => {
-    const [{cardNumber}, dispatch]: any = useStateValue();
+    const [{cardCompany}, dispatch]: any = useStateValue();
     const [cardCompanyLogo, setCardCompanyLogo] = useState(amex);
     const [cardCompanyAlt, setCardCompanyAlt] = useState("American Express logo");
 
-    const getCompanyLogo = (number: string) => {
-        const firstDigit = number[0];
-        if (firstDigit === '4') {
-            return visa;
-        } else if (firstDigit === '4') {
-            return mastercard;
-        } else if (firstDigit === '6') {
-            return discover;
+    const getCompanyLogo = (name: string) => {
+        let companyLogo = '';
+        if (name === CARD_TYPES.visa.name) {
+            companyLogo =  visa;
+        } else if (name === CARD_TYPES.mastercard.name) {
+            companyLogo = mastercard;
+        } else if (name === CARD_TYPES.discover.name) {
+            companyLogo =  discover;
+        } else if (name === CARD_TYPES.amex.name) {
+            companyLogo = amex;
+        } else if (name === CARD_TYPES.diners.name) {
+            companyLogo = dinersclub;
+        } else if (name === CARD_TYPES.diners_mastercard.name) {
+            companyLogo = dinersclub;
+        } else if (name === CARD_TYPES.troy.name) {
+            companyLogo = troy;
+        } else if (name === CARD_TYPES.unionpay.name) {
+            companyLogo = unionpay;
         }
-        return amex;
-    };
-
-    const sendCardNumberLength = (len: number) => {
-        dispatch({
-            type: 'changeCardNumberLength',
-            newCardNumberLength: len
-        })
-    };
-
-    const getCompanyAlt = (number: string) => {
-        const firstDigit = number[0];
-        if (firstDigit === '4') {
-            return "Visa logo";
-        } else if (firstDigit === '4') {
-            return "MasterCard logo";
-        } else if (firstDigit === '6') {
-            return "Discover logo";
-        }
-        return "American Express logo";
+        return companyLogo;
     };
 
     useEffect(() => {
-        const newCompanyLogo = getCompanyLogo(cardNumber);
-        const newCompanyAlt = getCompanyAlt(cardNumber);
+        const newCompanyLogo = getCompanyLogo(cardCompany);
+        const newCompanyAlt = `${cardCompany} logo`;
 
-        if (newCompanyAlt !== cardCompanyAlt) {
-            setCardCompanyLogo(newCompanyLogo);
-            setCardCompanyAlt(newCompanyAlt);
-        }
-    }, [cardNumber, cardCompanyAlt]);
+        console.log("Card company", newCompanyAlt);
+
+        setCardCompanyLogo(newCompanyLogo);
+        setCardCompanyAlt(newCompanyAlt);
+
+    }, [cardCompany]);
 
     return (
         <Container>

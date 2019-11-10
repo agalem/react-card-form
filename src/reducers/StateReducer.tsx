@@ -10,6 +10,11 @@ export const reducer = (state: any, action: any)  => {
                 ...state,
                 cardName: action.newCardName
             };
+        case 'changeCardCompany':
+            return {
+                ...state,
+                cardCompany: action.newCardCompany
+            };
         case 'changeCardNumberLength':
             return {
                 ...state,

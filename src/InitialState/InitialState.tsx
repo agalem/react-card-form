@@ -1,6 +1,7 @@
 interface InitialDataInterface {
     cardNumber: string,
     cardName: string,
+    cardCompany: string,
     cardMonth: string,
     cardYear: string,
     cardCvv: string,
@@ -11,6 +12,7 @@ interface InitialDataInterface {
 export const initialState: InitialDataInterface = {
     cardNumber: '',
     cardName: '',
+    cardCompany: 'American Express',
     cardMonth: 'MM',
     cardYear: 'YY',
     cardCvv: '',
