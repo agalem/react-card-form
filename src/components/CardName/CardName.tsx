@@ -12,20 +12,21 @@ const slideLeft = keyframes`
     }
 `;
 
-const HolderNameLetter = styled.span`
+const Letter = styled.span`
     position: relative;
     animation: ${slideLeft} 0.3s;
 `;
 
-type CardHolderProps = {
+type CardNameProps = {
     showBorder: boolean
 }
 
-const CardHolder = (props: CardHolderProps) => {
+const CardName = (props: CardNameProps) => {
     const [hasContent, setHasContent] = useState(false);
     const [name, setName] = useState([]);
+    const {showBorder} = props;
 
-    const [ {cardName} ] : any = useStateValue();
+    const [ {cardName } ] : any = useStateValue();
 
     useEffect(() => {
         if (cardName.length === 22) {
@@ -43,6 +44,16 @@ const CardHolder = (props: CardHolderProps) => {
         }
     }, [cardName]);
 
+    useEffect(() => {
+        if (showBorder) {
+            setHasContent(true);
+            return;
+        }
+        if (name.length >= 1) setHasContent(true);
+        else setHasContent(false);
+
+    }, [showBorder, name]);
+
     return (
         <Container showBorder={props.showBorder}>
             <Title hasContent={hasContent}>Card Holder</Title>
@@ -50,9 +61,9 @@ const CardHolder = (props: CardHolderProps) => {
                 <DisplayArea>
                     {name.map((elem: string, index: number) => {
                         return (
-                            <HolderNameLetter key={index}>
+                            <Letter key={index}>
                                 {elem.toUpperCase()}
-                            </HolderNameLetter>
+                            </Letter>
                         )
                     })}
                 </DisplayArea>
@@ -61,4 +72,4 @@ const CardHolder = (props: CardHolderProps) => {
     )
 };
 
-export default CardHolder;
+export default CardName;

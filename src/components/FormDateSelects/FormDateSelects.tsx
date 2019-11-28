@@ -20,8 +20,8 @@ const FormDateSelects: React.FC = () => {
         <Label>
             Expiration Date
             <RowSection>
-                <FormSelect label={'Month'} type={'month'}/>
-                <FormSelect label={'Year'} type={'year'}/>
+                <FormSelect addMargin={true} label={'Month'} type={'month'}/>
+                <FormSelect addMargin={false} label={'Year'} type={'year'}/>
             </RowSection>
         </Label>
     )

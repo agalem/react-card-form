@@ -30,10 +30,25 @@ export const reducer = (state: any, action: any)  => {
                 ...state,
                 cardYear: action.newCardYear
             };
+        case 'changeCardCvv':
+            return  {
+                ...state,
+                cardCvv: action.newCardCvv
+            };
+        case 'setFormErrors':
+            return {
+                ...state,
+                formErrors: action.formErrors
+            };
         case 'setBackVisible':
             return {
                 ...state,
                 isBackVisible: action.isBackVisible
+            };
+        case 'setBorder':
+            return {
+                ...state,
+                activeBorder: action.newActiveBorder
             };
         default:
             return state;

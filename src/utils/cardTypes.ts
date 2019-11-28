@@ -1,4 +1,7 @@
-export const CVV_LENGTH = 3;
+export const CVV_LENGTH: number = 3;
+export const DEFAULT_CARD_LENGTH: number = 16;
+export const DEFAULT_CARD_NAME: string = '';
+
 export const CARD_TYPES = {
     amex: {
         name: 'American Express',
@@ -13,7 +16,7 @@ export const CARD_TYPES = {
         length: 14
     },
     diners_mastercard: {
-        name: 'Diners Club',
+        name: 'Diners Club Mastercard',
         length: 16
     },
     discover: {
@@ -23,13 +26,5 @@ export const CARD_TYPES = {
     mastercard: {
         name: 'Mastercard',
         length: 16
-    },
-    troy: {
-        name: 'Troy',
-        length: 16
-    },
-    unionpay: {
-        name: 'UnionPay',
-        length: 16
-    },
+    }
 };

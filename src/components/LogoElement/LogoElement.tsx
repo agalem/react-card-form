@@ -7,8 +7,6 @@ import amex from "../../assets/images/amex.png";
 import dinersclub from "../../assets/images/dinersclub.png";
 import discover from "../../assets/images/discover.png";
 import mastercard from "../../assets/images/mastercard.png";
-import troy from "../../assets/images/troy.png";
-import unionpay from "../../assets/images/unionpay.png";
 import visa from "../../assets/images/visa.png";
 
 const Container = styled.div`
@@ -24,7 +22,7 @@ const Logo = styled.img`
 `;
 
 const LogoElement: React.FC = () => {
-    const [{cardCompany}, dispatch]: any = useStateValue();
+    const [{cardCompany}]: any = useStateValue();
     const [cardCompanyLogo, setCardCompanyLogo] = useState(amex);
     const [cardCompanyAlt, setCardCompanyAlt] = useState("American Express logo");
 
@@ -42,10 +40,6 @@ const LogoElement: React.FC = () => {
             companyLogo = dinersclub;
         } else if (name === CARD_TYPES.diners_mastercard.name) {
             companyLogo = dinersclub;
-        } else if (name === CARD_TYPES.troy.name) {
-            companyLogo = troy;
-        } else if (name === CARD_TYPES.unionpay.name) {
-            companyLogo = unionpay;
         }
         return companyLogo;
     };
@@ -54,7 +48,7 @@ const LogoElement: React.FC = () => {
         const newCompanyLogo = getCompanyLogo(cardCompany);
         const newCompanyAlt = `${cardCompany} logo`;
 
-        console.log("Card company", newCompanyAlt);
+        console.log("Card company ", newCompanyAlt);
 
         setCardCompanyLogo(newCompanyLogo);
         setCardCompanyAlt(newCompanyAlt);

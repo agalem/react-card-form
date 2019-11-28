@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useStateValue } from "../../contexts/StateContext";
 
 import CardNumber from "../CardNumber/CardNumber";
-import CardHolder from "../CardHolder/CardHolder";
+import CardName from "../CardName/CardName";
 import CardExpiration from "../CardExpiration/CardExpiration";
 import CardCVV from "../CardCVV/CardCVV";
 import LogoElement from "../LogoElement/LogoElement";
@@ -20,6 +20,7 @@ const Content = styled.div<ContentProps>`
   position: absolute;
   width: 100%;
   height: 100%;
+  overflow: hidden;
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
   transition: ${props => props.isBackVisible ? 'transform 1s' : 'transform 0.5s' };
   transform-style: preserve-3d;
@@ -125,7 +126,7 @@ const CardCompanyBackContainer = styled.div`
 `;
 
 const Card: React.FC  = () => {
-    const [{isBackVisible}] : any = useStateValue();
+    const [{isBackVisible, activeBorder}] : any = useStateValue();
 
     return (
         <CardContainer >
@@ -136,11 +137,11 @@ const Card: React.FC  = () => {
                         <LogoElement/>
                     </CardRow>
                     <CardRow>
-                        <CardNumber showBorder={false}/>
+                        <CardNumber showBorder={activeBorder === "CardNumber"}/>
                     </CardRow>
                     <CardRow space>
-                        <CardHolder showBorder={false}/>
-                        <CardExpiration showBorder={false}/>
+                        <CardName showBorder={activeBorder === "CardName"}/>
+                        <CardExpiration showBorder={activeBorder === "CardExpiration"}/>
                     </CardRow>
                 </Front>
 

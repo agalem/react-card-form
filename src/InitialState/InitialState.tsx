@@ -1,3 +1,5 @@
+import { DEFAULT_CARD_LENGTH, CARD_TYPES } from "../utils/cardTypes";
+
 interface InitialDataInterface {
     cardNumber: string,
     cardName: string,
@@ -6,16 +8,20 @@ interface InitialDataInterface {
     cardYear: string,
     cardCvv: string,
     cardNumberLength: number,
-    isBackVisible: boolean
+    isBackVisible: boolean,
+    activeBorder: string,
+    formErrors: object
 }
 
 export const initialState: InitialDataInterface = {
     cardNumber: '',
     cardName: '',
-    cardCompany: 'American Express',
+    cardCompany: CARD_TYPES.mastercard.name,
     cardMonth: 'MM',
     cardYear: 'YY',
     cardCvv: '',
-    cardNumberLength: 16,
-    isBackVisible: false
+    cardNumberLength: CARD_TYPES.mastercard.length,
+    isBackVisible: false,
+    activeBorder: '',
+    formErrors: {CardNumber: [], CardName: []}
 };

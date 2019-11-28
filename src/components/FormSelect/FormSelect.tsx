@@ -5,10 +5,18 @@ import { useStateValue } from "../../contexts/StateContext";
 
 import dropdown from "../../assets/images/dropdown.png";
 
-const Container = styled.div`
+interface ContainerProps {
+    addMargin: boolean
+}
+
+const Container = styled.div<ContainerProps>`
     display: inline-block;
     width: 100%;
-    margin-right: 20px;
+    margin-right: ${props => props.addMargin ? "20px" : "0px"}
+    
+    @media only screen and (min-width: 700px) {
+        margin-right: 20px;
+    }
 `;
 
 const Select = styled.select`
@@ -38,13 +46,14 @@ const Option = styled.option`
 
 type FormSelectProps = {
     readonly label: string,
-    readonly type: string
+    readonly type: string,
+    readonly addMargin: boolean
 }
 
 const FormSelect = (props: FormSelectProps) => {
 
     const [data, dispatch] : any = useStateValue();
-    const {label, type} = props;
+    const {label, type, addMargin} = props;
 
     const getOptions = () => {
         const options = [];
@@ -80,9 +89,23 @@ const FormSelect = (props: FormSelectProps) => {
         }
     };
 
+    const handleFocus = () => {
+        dispatch({
+            type: 'setBorder',
+            newActiveBorder: 'CardExpiration'
+        });
+    };
+
+    const handleBlur = () => {
+        dispatch({
+            type: 'setBorder',
+            newActiveBorder: ''
+        });
+    };
+
     return (
-        <Container>
-            <Select defaultValue={label} onChange={(e) => handleChange(e)}>
+        <Container addMargin={addMargin}>
+            <Select defaultValue={label} onChange={(e) => handleChange(e)} onFocus={() => handleFocus()} onBlur={() => handleBlur()}>
                 <Option value={label} disabled={true}>{label}</Option>
                 {getOptions().map((elem, index) => {
                     return (

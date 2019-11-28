@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { useStateValue } from "../../contexts/StateContext";
+import { CVV_LENGTH } from "../../utils/cardTypes";
 
 const CvvTitle = styled.p`
     width: 100%;
@@ -37,18 +39,58 @@ const CvvArea = styled.div`
     right: 5px;
 `;
 
-const CvvNumber = "1234";
+const TopElement = styled.span`
+    display: block;
+    position: relative;
+    top: 0;
+`;
+
+const BottomElement = styled.span`
+    display: block;
+    position: relative;
+    transform: scale(0.8);
+`;
+
+interface NumberContainerProps {
+    isUserInput: boolean
+}
+
+const NumberContainer = styled.div<NumberContainerProps>`
+    display: inline-block;
+    width: 12px;
+    height: 20px;
+    overflow: hidden;
+    ${TopElement} {
+        transform: ${props => props.isUserInput ? 'translateY(-120%) skew(-20deg, 0deg) scale(0.8)' : 'none'};
+        transition: transform 0.3s;
+    }
+    ${BottomElement} {
+        transform: ${props => props.isUserInput ? 'scale(1)' : 'scale(0.8)'};
+        top: ${props => props.isUserInput ? '-20px' : '0'};
+        transition: all 0.3s;
+    }
+`;
 
 const CardCVV: React.FC = () => {
+
+    const defaultNumber = new Array(CVV_LENGTH).fill("*");
+    const [ {cardCvv} ]: any = useStateValue();
+    const numberToShow = cardCvv.split("").concat(defaultNumber.slice(cardCvv.length));
+
     return (
         <Container>
             <CvvTitle>CVV</CvvTitle>
             <CvvArea>
-                {CvvNumber.split('').map((elem, index) => {
+                {numberToShow.map((elem: string, index: number) => {
                     return (
-                        <span key={index}>
-                            *
-                        </span>
+                        <NumberContainer key={index} isUserInput={elem !== "*"}>
+                            <TopElement>
+                                *
+                            </TopElement>
+                            <BottomElement>
+                                {elem}
+                            </BottomElement>
+                        </NumberContainer>
                     )
                 })}
             </CvvArea>
