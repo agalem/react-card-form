@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/react-card-form/static/css/main.0d968baa.chunk.css",
+    "main.js": "/react-card-form/static/js/main.0a99991f.chunk.js",
+    "main.js.map": "/react-card-form/static/js/main.0a99991f.chunk.js.map",
+    "runtime-main.js": "/react-card-form/static/js/runtime-main.bcb6efd6.js",
+    "runtime-main.js.map": "/react-card-form/static/js/runtime-main.bcb6efd6.js.map",
+    "static/css/2.5dbdccff.chunk.css": "/react-card-form/static/css/2.5dbdccff.chunk.css",
+    "static/js/2.56b23630.chunk.js": "/react-card-form/static/js/2.56b23630.chunk.js",
+    "static/js/2.56b23630.chunk.js.map": "/react-card-form/static/js/2.56b23630.chunk.js.map",
+    "index.html": "/react-card-form/index.html",
+    "precache-manifest.4e619f2abd3a4351f85de4b23d6230a5.js": "/react-card-form/precache-manifest.4e619f2abd3a4351f85de4b23d6230a5.js",
+    "service-worker.js": "/react-card-form/service-worker.js",
+    "static/css/2.5dbdccff.chunk.css.map": "/react-card-form/static/css/2.5dbdccff.chunk.css.map",
+    "static/css/main.0d968baa.chunk.css.map": "/react-card-form/static/css/main.0d968baa.chunk.css.map",
+    "static/media/background.jpeg": "/react-card-form/static/media/background.5b2a3e29.jpeg",
+    "static/media/chip.png": "/react-card-form/static/media/chip.2c37b1d3.png",
+    "static/media/discover.png": "/react-card-form/static/media/discover.62706277.png",
+    "static/media/mastercard.png": "/react-card-form/static/media/mastercard.cdaba15c.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.bcb6efd6.js",
+    "static/css/2.5dbdccff.chunk.css",
+    "static/js/2.56b23630.chunk.js",
+    "static/css/main.0d968baa.chunk.css",
+    "static/js/main.0a99991f.chunk.js"
+  ]
+}
