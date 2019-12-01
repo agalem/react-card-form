@@ -20,7 +20,6 @@ const Content = styled.div<ContentProps>`
   position: absolute;
   width: 100%;
   height: 100%;
-  overflow: hidden;
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
   transition: ${props => props.isBackVisible ? 'transform 1s' : 'transform 0.5s' };
   transform-style: preserve-3d;
@@ -37,6 +36,10 @@ const CardContainer = styled.div`
   height: 270px;
   width: 100%;
   perspective: 500px;
+  
+  @media only screen and (max-width: 400px) {
+    overflow: hidden;
+  }
 `;
 
 const Front = styled.div`
@@ -48,13 +51,11 @@ const Front = styled.div`
           rgba(0, 0, 0, 0.25)
         ), url(${backgroundImg});
    line-height: 300px; 
-   color: #03446A;
    text-align: center;
-   font-size: 10px;
    border-radius: 5px;
-   backface-visibility: hidden;
    display: grid;
    grid-template-rows: 90px 90px 90px;
+   backface-visibility: hidden !important;
 `;
 
 interface CardRowProps {
@@ -70,6 +71,7 @@ const CardRow = styled.div<CardRowProps>`
     align-items: center;
     justify-content: ${props => props.space ? 'space-between' : 'center'}
     padding: 0px ${props => props.edgeTouching ? '0px' : '22px'};
+   
 `;
 
 const Back = styled.div`
@@ -80,10 +82,8 @@ const Back = styled.div`
           rgba(0, 0, 0, 0.25), 
           rgba(0, 0, 0, 0.25)
         ), url(${backgroundImg});
-   line-height: 300px; 
-   color: #03446A;
+   line-height: 300px;
    text-align: center;
-   font-size: 10px;
    border-radius: 5px;
    backface-visibility: hidden;
    display: grid;

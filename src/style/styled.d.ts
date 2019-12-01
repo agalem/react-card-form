@@ -14,6 +14,35 @@ declare module 'styled-components' {
             titleSize: string,
             titleSizeNoContent: string,
             titleColor: string
+        },
+        input: {
+            color: {
+                darkgray: string
+            },
+            border: {
+                color: string
+            },
+            fontsize: {
+                small: string
+            },
+            fontFamily: string
+        },
+        label: {
+            color: {
+                darkgray: string,
+                error: string,
+            },
+            fontsize: string,
+            fontWeight: number
+        },
+        button: {
+            fontsize: string,
+            fontWeight: number,
+            fontFamily: string
+            boxShadow: string,
+            color: string,
+            background: string,
+            radius: string
         }
     }
 }

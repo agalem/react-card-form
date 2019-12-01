@@ -9,7 +9,7 @@ import Form from "./components/Form/Form";
 const FormContainer = styled.div`
     max-width: 800px;
     position: relative;
-    top: 150px;
+    top: 120px;
     background: #fff;
     box-shadow: 0 30px 60px 0 rgba(90, 116, 148, 0.4);
     border-radius: 10px;

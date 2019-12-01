@@ -23,7 +23,7 @@ const Logo = styled.img`
 
 const LogoElement: React.FC = () => {
     const [{cardCompany}]: any = useStateValue();
-    const [cardCompanyLogo, setCardCompanyLogo] = useState(amex);
+    const [cardCompanyLogo, setCardCompanyLogo] = useState(mastercard);
     const [cardCompanyAlt, setCardCompanyAlt] = useState("American Express logo");
 
     const getCompanyLogo = (name: string) => {

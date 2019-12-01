@@ -29,7 +29,7 @@ const Select = styled.select`
     padding: 5px 30px
     height: 60px;
     width: 100%;
-    border: 1px solid #ced6e0;
+    border: 1px solid ${props => props.theme.input.border.color};
     font-size: 18px;
 `;
 

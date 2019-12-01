@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useStateValue } from "../../contexts/StateContext";
 import { CARD_TYPES, CVV_LENGTH, DEFAULT_CARD_LENGTH, DEFAULT_CARD_NAME } from "../../utils/cardTypes";
+import {ERROR_MSGS} from "../../utils/errorMsgs";
+import {toast} from "react-toastify";
 
 const Container = styled.div`
     width: 100%;
 `;
 
 const Label = styled.label`
-    font-size: 14px;
-    font-weight: 500;
-    color: #1a3b5d;
+    font-size: ${props => props.theme.label.fontsize};
+    font-weight: ${props => props.theme.label.fontWeight};
+    color: ${props => props.theme.input.color.darkgray};
     width: 100%;
     display: block;
     user-select: none;
@@ -23,8 +25,8 @@ interface InputProps {
 
 const LabelText = styled.span<InputProps>`
     display: inline-block;
-    margin-bottom: 5px;
-    color: ${props => props.isInvalid ? '#ff0000' : '#1a3b5d'};
+    margin-bottom: 10px;
+    color: ${props => props.isInvalid ? props.theme.label.color.error : props.theme.label.color.darkgray};
 `;
 
 const Input = styled.input<InputProps>`
@@ -37,11 +39,11 @@ const Input = styled.input<InputProps>`
     border-style: solid;
     border-color: ${props => props.isInvalid ? '#ff0000' : '#ced6e0'};
     transition: all 0.3s ease-in-out;
-    font-size: 18px;
+    font-size: ${props => props.theme.input.fontsize.small};
     padding: 5px 15px;
     background: none;
     color: ${props => props.isInvalid ? '#ff0000' : '#1a3b5d'};;
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: ${props => props.theme.input.fontFamily};
 `;
 
 type FormTextInputProps = {
@@ -92,18 +94,18 @@ const FormTextInput = (props: FormTextInputProps) => {
         if (isInvalid) setInvalid(false);
 
         if (newCardCvv.length > CVV_LENGTH) {
-            console.log("Za długi input");
+            toast.warn(ERROR_MSGS.cardCvv.tooLong);
             e.target.value = e.target.value.slice(0, CVV_LENGTH);
             newCardCvv = e.target.value;
         }
 
         if (isNaN(newCardCvv)) {
-            console.log("Is not a number");
+            toast.error(ERROR_MSGS.cardCvv.wrongCharacters);
             setInvalid(true);
             return;
         }
         if (/[!@#$%^&*(),.?":{}|<>]/.test(newCardCvv)) {
-            console.log("Zawiera znaki specjalne");
+            toast.error(ERROR_MSGS.cardCvv.wrongCharacters);
             setInvalid(true);
             return;
         }
@@ -148,15 +150,15 @@ const FormTextInput = (props: FormTextInputProps) => {
         removeError();
 
         if (/\d/.test(newCardName)) {
-            const errorText = "Zawiera cyfry";
-            console.log(errorText);
+            const errorText = ERROR_MSGS.cardName.wrongCharacters;
+            toast.error(errorText);
             setInvalid(true);
             addError(errorText);
             return;
         }
         if (/[!@#$%^&*(),.?":{}|<>]/.test(newCardName)) {
-            const errorText =  "Zawiera znaki specjalne";
-            console.log(errorText);
+            const errorText =  ERROR_MSGS.cardName.wrongCharacters;
+            toast.error(errorText);
             setInvalid(true);
             addError(errorText);
             return;
@@ -174,14 +176,14 @@ const FormTextInput = (props: FormTextInputProps) => {
         removeError();
 
         if (newCardNumber.length > 16) {
-            console.log("Za długi input");
+            toast.warn(ERROR_MSGS.cardNumer.tooLong);
             e.target.value = e.target.value.slice(0, 16);
             newCardNumber = e.target.value;
         }
 
         if (isNaN(newCardNumber)) {
-            const errorText: string = "Is not a number";
-            console.log(errorText);
+            const errorText: string = ERROR_MSGS.cardNumer.wrongCharacters;
+            toast.error(errorText);
             setInvalid(true);
             addError(errorText);
             return;
@@ -290,10 +292,12 @@ const FormTextInput = (props: FormTextInputProps) => {
                     break;
                 }
             }
-            console.log(regex.test(cardNumber));
+
             setInvalid(!regex.test(cardNumber));
             if(!regex.test(cardNumber)) {
-                addError(`Invalid ${newCardCompany} card number`)
+                const errorMsg = ERROR_MSGS.cardCompany.nonValid + newCardCompany + " card";
+                toast.error(errorMsg);
+                addError(errorMsg);
             } else {
                 removeError()
             }

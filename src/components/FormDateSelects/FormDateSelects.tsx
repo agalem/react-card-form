@@ -10,8 +10,8 @@ const RowSection = styled.div`
 const Label = styled.label`
     display: grid;
     grid-template-rows: 23px 60px;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: ${props => props.theme.label.fontsize};
+    font-weight: ${props => props.theme.label.fontWeight};
     user-select: none;
 `;
 

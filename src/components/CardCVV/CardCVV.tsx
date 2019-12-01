@@ -24,9 +24,9 @@ const Container = styled.div`
 const CvvArea = styled.div`
     width: 100%;
     height: 45px;
-    color: #1a3b5d;
+    color: ${props => props.theme.input.color.darkgray};
     background-color: #fff;
-    font-size: 18px;
+    font-size: ${props => props.theme.input.fontsize.small};
     line-height: 100%;
     border-radius: 4px;
     text-align: right;
